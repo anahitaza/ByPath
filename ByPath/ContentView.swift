@@ -66,12 +66,11 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
 }
 
 
-///import WeatherKit
-///import CoreLocation
+
 public class WeatherViewModel: ObservableObject {
     let service = WeatherService()
     
-    let currentLocation = CLLocation(latitude: 37.7749, longitude: 122.4194)
+    let currentLocation = CLLocation(latitude: 42.33105, longitude: -83.04571)
     var currentWeather: CurrentWeather?
     func getWeather() async {
         
