@@ -6,6 +6,9 @@
 //
 import MapKit
 import SwiftUI
+import WeatherKit
+import CoreLocation
+
 
 struct MapView: View {
     @StateObject private var viewModel = MapViewModel()
@@ -16,6 +19,7 @@ struct MapView: View {
     var body: some View {
         Map(coordinateRegion: $region, showsUserLocation: true)
             .ignoresSafeArea()
+        
     }
 }
 struct MapView_Previews: PreviewProvider {
@@ -60,6 +64,20 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
         }
     }
 }
-///import WeatherKit
-///import CoreLocation
-///let weatherService = WeatherService()
+
+
+let weatherService = WeatherService()
+let detroit = CLLocation(latitude: 42.33105, longitude: -83.04571)
+let weather = try await service.weather(for: detroit)
+func getWeather() async {
+    
+    do {
+        
+        let weather = try await service.weather(for: CLLocation)
+        
+    } catch {
+        assertionFailure(error.localizedDescription)
+    }
+}
+        
+
