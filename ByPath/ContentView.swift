@@ -66,18 +66,35 @@ final class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
 }
 
 
-let weatherService = WeatherService()
-let detroit = CLLocation(latitude: 42.33105, longitude: -83.04571)
-let weather = try await service.weather(for: detroit)
-func getWeather() async {
+///import WeatherKit
+///import CoreLocation
+public class WeatherViewModel: ObservableObject {
+    let service = WeatherService()
     
-    do {
+    let currentLocation = CLLocation(latitude: 37.7749, longitude: 122.4194)
+    var currentWeather: CurrentWeather?
+    func getWeather() async {
         
-        let weather = try await service.weather(for: CLLocation)
-        
-    } catch {
-        assertionFailure(error.localizedDescription)
+        do {
+            
+            let weather = try await service.weather(for: currentLocation)
+            
+            self.currentWeather = CurrentWeather(
+                temperature: weather.currentWeather.temperature.value,
+                condition: weather.currentWeather.condition.rawValue,
+                symbolName: weather.currentWeather.symbolName
+            )
+        } catch {
+            assertionFailure(error.localizedDescription)
+        }
     }
+    
 }
-        
+struct CurrentWeather {
+    
+    let temperature: Double
+    let condition: String
+    let symbolName: String
+    
+}
 
